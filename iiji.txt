@@ -1,0 +1,464 @@
+below is indexSideBar.php ,   <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item has-treeview menu-open">
+            <a href="index.php" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Nyumbani               
+              </p>
+            </a>
+          </li>
+          
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>
+            Mauzo
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a> 
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="home.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                  &nbsp;&nbsp;&nbsp;<i class="fas fa-cart-plus"></i>
+
+                  &nbsp;&nbsp;<p>Uza Dawa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a href="return_product.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                      &nbsp;&nbsp;&nbsp;<i class="fas fa-undo-alt"></i>
+                      &nbsp;&nbsp;<p>Rudisha Dawa</p>
+                  </a>
+              </li> 
+              <li class="nav-item">
+                   <a href="all_sales.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                       &nbsp;&nbsp;&nbsp;<i class="fas fa-receipt"></i>
+                       &nbsp;&nbsp;<p>Mauzo yote</p>
+                   </a>
+              </li> 
+              <li class="nav-item">
+                   <a href="bidhaa_20_zilizoingiza_pesa_nyingi.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                       &nbsp;&nbsp;&nbsp;<i class="fas fa-trophy"></i>
+                       &nbsp;&nbsp;<p>20 bora</p>
+                   </a>
+              </li> 
+              <li class="nav-item">
+                   <a href="bidhaa_20_zisizoingiza_pesa_nyingi.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                       &nbsp;&nbsp;&nbsp;<i class="fas fa-times-circle"></i>
+                       &nbsp;&nbsp;<p>20 sio bora</p>
+                   </a>
+              </li> 
+              </li> 
+              <li class="nav-item">
+                <a href="Zilizouzika_kidogo.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-exclamation-circle"></i>
+                  &nbsp;&nbsp;<p>zilizouzika kidogo</p>
+                </a>
+              </li> 
+              </li>  
+              <li class="nav-item">
+                <a href="zilizouzika_sana.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-check-circle"></i>
+                  &nbsp;&nbsp;<p>zilizouzika sana</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="never_sold_products.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-ban"></i>
+                  &nbsp;&nbsp;<p>Hazijawahi kuuzwa</p>
+                </a>
+              </li>  
+           
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>
+              Dawa
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="view.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-eye"></i>
+                  &nbsp;&nbsp;<p>Tazama Dawa</p>
+                </a>
+              </li>
+            <li class="nav-item">
+                  <a href="bidhaa_zilizoharibika.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                      &nbsp;&nbsp;&nbsp;<i class="fas fa-trash-alt"></i>
+                      &nbsp;&nbsp;<p>Zilizo haribika</p>
+                  </a>
+              </li> 
+            <li class="nav-item">
+                <a href="qty_alert.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-exclamation-triangle"></i>
+                  &nbsp;&nbsp;<p>Zinazokaribia kuisha</p> 
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="out_of_stock.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-box-open"></i>
+                  &nbsp;&nbsp;<p>Zilizoisha</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="ex_alert.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-exclamation"></i>
+                  &nbsp;&nbsp;<p>karibia ku expire</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="expired_products.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-times"></i>
+                  &nbsp;&nbsp;<p>zilizo expire</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-wallet"></i>
+                <p>Matumizi<i class="fas fa-angle-left right"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="expenditure.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-money-bill"></i>
+                  &nbsp;&nbsp;<p>Rekodi matumizi</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-bar"></i>
+              <p>
+                Ripoti
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="stock_report.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-clipboard-list"></i>
+                  &nbsp;&nbsp;<p>Ripoti ya Dawa</p>
+                </a>
+              </li>
+            <li class="nav-item">
+                <a href="expenditure_report.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-file-invoice-dollar"></i>
+                  &nbsp;&nbsp;<p>Ripoti ya Matumizi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+              <a href="sales_report.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-file-alt"></i>
+                  &nbsp;&nbsp;<p>Ripoti ya Mauzo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="total_sales_graph.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-chart-line"></i>
+                  &nbsp;&nbsp;<p>Graph idadi ya mauzo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="sales_graph.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-chart-area"></i>
+                  &nbsp;&nbsp;<p>Graph kiasi cha mauzo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="profit_graph.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-chart-pie"></i>
+                  &nbsp;&nbsp;<p>Graph ya faida</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="expenditure_graph.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-chart-bar"></i>
+                  &nbsp;&nbsp;<p>Graph ya matumizi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="business_analysis.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-chart-bar"></i>
+                  &nbsp;&nbsp;<p>Uchambuzi biashara</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tools"></i>
+              <p>
+                Mipangilio
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="new_product.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-plus-circle"></i>
+                  &nbsp;&nbsp;<p>Ongeza Dawa</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="user_management.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-users"></i>
+                  &nbsp;&nbsp;<p>Watumiaji</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+          <a href="logout.php" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fa fa-power-off"></i>
+                  &nbsp;&nbsp;&nbsp;<p>Ondoka</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+, below is all_sales.php , <?php
+session_start();
+
+if (!isset($_SESSION['user_session'])) {
+    header("location:index.php");
+}
+$mtumiaji = $_SESSION['user_session'];
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MauzoApp</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="./plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="./plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+  
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Nyumbani</a>
+            </li>   
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item">
+      <a href="#" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
+                <strong><?php echo $mtumiaji ?> </strong>
+                </a>
+      </li>
+      <li class="nav-item">
+      <a href="#" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fa fa-power-off"></i>
+                <strong>  &nbsp;&nbsp;Ondoka</strong>
+                </a>
+      </li>
+    </ul>
+    </nav>
+  
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="index.php" class="brand-link">   
+            <H1><span class="brand-text font-weight-light"> MauzoApp</span></H1>
+        </a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar Menu -->
+            <?php include('indexSideBar.php') ?>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">	
+                        <!-- Content Header -->
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <!-- <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                            <li class="breadcrumb-item active">Matumizi</li> -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><b>Jumla ya mauzo yote yaliyofanyika</b></h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="card-body table-responsive">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr class="table-success">
+                                                    <th>S/N</th>
+                                                    <th>Tarehe</th>
+                                                    <th>Dawa</th>
+                                                    <th>Idadi</th>
+                                                    <th>Jumla kiasi cha fedha</th>
+                                                    <th>Jumla ya faida</th>  
+                                                    <th>Namba ya oda</th>    
+                                                    <th>Aliyeuza</th>                                     
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Include database connection
+                                                include("dbcon.php");
+
+                                                // Get the current year
+                                                $currentYear = date("Y");            
+                                                
+                                                // Construct the SQL query to retrieve all sales
+                                                $select_sql = "SELECT * FROM sales";
+                                                
+                                                // Execute the SQL query
+                                                $select_query = mysqli_query($con, $select_sql);
+
+                                                // Initialize variables for total amount and profit
+                                                $total_amount = 0;
+                                                $total_profit = 0;
+                                                $serialNumber = 1; // Initialize serial number counter
+
+                                                // Check if there are results
+                                                if (mysqli_num_rows($select_query) > 0) {
+                                                    // Output the sales data
+                                                    while ($row = mysqli_fetch_assoc($select_query)) {
+                                                        // Calculate total amount
+                                                        $total_amount += $row['total_amount'];
+                                                        // Calculate total profit
+                                                        $total_profit += $row['total_profit'];
+
+                                                        // Output each row of sales data
+                                                        echo "<tr>";
+                                                        echo "<td>" . $serialNumber++ . "</td>"; // Serial number column
+                                                        echo "<td>" . $row['Date'] . "</td>";
+                                                        echo "<td>" . $row['medicines'] . "</td>";
+                                                        echo "<td>" . $row['quantity'] . "</td>";
+                                                        echo "<td>" . $row['total_amount'] . "</td>";
+                                                        echo "<td>" . $row['total_profit'] . "</td>";
+                                                        echo "<td>" . $row['invoice_number'] . "</td>";
+                                                        echo "<td>" . $row['created_by'] . "</td>";
+                                                        echo "</tr>";
+                                                    }
+                                                } else {
+                                                    // If there are no sales recorded for the specified period, display a message
+                                                    echo '<tr><td colspan="8">Hakuna mauzo yeyote yaliyofanyika.</td></tr>';
+                                                }
+                                                ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="table-success">
+                                                    <th colspan="4">Jumla</th>
+                                                    <th><?php echo $total_amount; ?></th>
+                                                    <th><?php echo $total_profit; ?></th>
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-inline-block">
+                <strong>Designed and Developed by <a href="https://wa.me/message/JYOOWVES6MT7M1"> D_TECH</a>.</strong>
+            </div>
+            <strong>Copyright &copy; 2023-2024 D_TECH.</strong>
+            All rights reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    
+    <!-- jQuery -->
+    <script src="./plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="./plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="./plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="./plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="./plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="./dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="./dist/js/demo.js"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#dataTables-example").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "ordering": false // Disable initial ordering if not needed
+            });
+        });
+    </script>
+</body>
+</html>
+i want when user clicks on mauzo yote on side bar  to show circula progess on the current page and only open all_sales page if it is full loaded 

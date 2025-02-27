@@ -1,0 +1,40 @@
+<!-- loading circular progrss css on before clossing header -->
+
+<style>
+    #content {
+      display: none;
+    }
+    #spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+<!-- loading circular progrss id  below boby just after opening it -->
+ 
+
+ <div id="spinner">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>  
+<!-- loading circular progrss javascript on footer before clossing body -->
+<script>
+  $(window).on('load', function() {
+    $('#spinner').hide();
+    $('#content').show();
+  });
+</script>
+
+<!-- loading circular progrss on indexsidebar -->
+
+
+
+</li>
+<li class="nav-item">
+<a href="business_analysis.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link" onclick="showLoader()">
+  &nbsp;&nbsp;&nbsp;<i class="fa fa-table"></i>
+  &nbsp;&nbsp;<p>Uchambuzi biashara</p>
+</a>
+ </li>
