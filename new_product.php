@@ -1,13 +1,8 @@
-
-<?php
- 
+<?php 
     session_start();
-
     if(!isset($_SESSION['user_session'])){
-
         header("location:../index.php");
-    }
-    
+    }    
 //  a session variable named 'username' that stores the username of the logged-in user
 $mtumiaji = $_SESSION['user_session'];
 include("dbcon.php");
@@ -21,34 +16,27 @@ $total_quantity_sql = "SELECT SUM(act_remain_quantity) AS total_quantity FROM st
 $total_quantity_result = mysqli_query($con, $total_quantity_sql);
 $total_quantity_row = mysqli_fetch_assoc($total_quantity_result);
 $total_quantity = $total_quantity_row['total_quantity'];
-
 $records_per_page = 10;
-
 // Get the current page from URL, default to page 1
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($page < 1) {
     $page = 1;
 }
-
 // Calculate offset for SQL query
 $offset = ($page - 1) * $records_per_page;
-
 // Get total records count
 $total_sql = "SELECT COUNT(*) AS total FROM stock";
 $total_result = mysqli_query($con, $total_sql);
 $total_row = mysqli_fetch_assoc($total_result);
 $total_records = $total_row['total'];
 $total_pages = ceil($total_records / $records_per_page);
-
 // Fetch records with LIMIT and OFFSET
 $sql = "SELECT id, medicine_name, category, quantity, used_quantity, remain_quantity, act_remain_quantity, actual_price, selling_price, profit_price, register_date, expire_date, edited_by, edited_date
         FROM stock
         ORDER BY id DESC
         LIMIT $records_per_page OFFSET $offset";
-
 $result = mysqli_query($con, $sql);
 ?>
-
 <!DOCTYPE html>  
 <html>
 <head>
@@ -58,8 +46,8 @@ $result = mysqli_query($con, $sql);
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- THE BELOW LINKS FOR MODAL TO FUNCTION -->
   <link rel="stylesheet" type="text/css" href="src/facebox.css">
-       <!-- THE LINK BELOW FOR UPDATE QUANTITY CYSING -->
-       <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <!-- THE LINK BELOW FOR UPDATE QUANTITY CYSING -->
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -71,93 +59,95 @@ $result = mysqli_query($con, $sql);
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> 
-
-
-
-  
-
-
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../src/facebox.js"></script>
-
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/jquery_ui.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="src/facebox.js"></script>
-
-    <script type="text/javascript">
-       jQuery(document).ready(function($) {//*****POP_UP FORMS*********
+  <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../src/facebox.js"></script>
+  <script src="js/jquery-1.7.2.min.js"></script>
+  <script src="js/jquery_ui.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="src/facebox.js"></script>
+  <script type="text/javascript">
+       jQuery(document).ready(function($) {
+        //*****POP_UP FORMS*********
     $("a[id*=popup").facebox({
       loadingImage : './src/loading.gif',
       closeImage   : './src/closelabel.png'
     })
-  })//*****POP_UP FORMS*********
+  })
+  //*****POP_UP FORMS*********
+  </script>
+       
+<style>
+  /* Custom Modal Styling for Small Screens */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 10px; /* Reduce margin on small screens */
+  }
 
-    </script>
-     
+  .modal-content {
+    margin: 0 auto;
+  }
 
+  .modal-body {
+    padding: 15px; /* Reduce padding on small screens */
+  }
 
+  .form-group {
+    margin-bottom: 10px; /* Reduce spacing between form fields */
+  }
+}
+</style>
 
-
-
-</head>
-
+  </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <!-- Navbar -->
-  
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <!-- Navbar -->  
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
-      </li>     
-    </ul>
-
+<ul class="navbar-nav">
+  <li class="nav-item">
+     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+  </li>
+  <li class="nav-item d-none d-sm-inline-block">
+     <a href="#" class="nav-link">Home</a>
+  </li>     
+</ul>
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item">
+    <!-- Messages Dropdown Menu -->
+    <li class="nav-item">
       <a href="#" class="nav-link">
-                &nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
-                <strong><?php echo $mtumiaji ?> </strong>
-                </a>
-      </li>
-      <li class="nav-item">
+         &nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
+         <strong><?php echo $mtumiaji ?> </strong>
+       </a>
+    </li>
+    <li class="nav-item">
       <a href="logout.php" class="nav-link">
-                &nbsp;&nbsp;&nbsp;<i class="fa fa-power-off"></i>
-                <strong>  &nbsp;&nbsp;Logout</strong>
-                </a>
-      </li>
-    </ul>
+        &nbsp;&nbsp;&nbsp;<i class="fa fa-power-off"></i>
+        <strong>  &nbsp;&nbsp;Logout</strong>
+      </a>
+    </li>
+  </ul>
   </nav>
-  
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="index.php" class="brand-link">   
-      <H1><span class="brand-text font-weight-light"> MauzoApp</span></H1>
-    </a>
+<!-- /.navbar -->
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+     <a href="index.php" class="brand-link">   
+         <H1><span class="brand-text font-weight-light"> MauzoApp</span></H1>
+     </a>
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar Menu -->
-      
-      <?php include('indexSideBar.php') ?>
-      <!-- /.sidebar-menu -->
+        <!-- Sidebar Menu -->      
+        <?php include('indexSideBar.php') ?>
+        <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid"> 
@@ -165,62 +155,41 @@ $result = mysqli_query($con, $sql);
           <div class="col-sm-6">	
             <p>List of available medicines,add,delete and update medicines</p>
             <?php
-if (isset($_SESSION['error_message'])) {
-    echo '<div id="message" style="color: red; text-align: center;">'.$_SESSION['error_message'].'</div>';
-    unset($_SESSION['error_message']);
-}
-
-if (isset($_SESSION['success_message'])) {
-    echo '<div id="message" style="color: green; text-align: center;">'.$_SESSION['success_message'].'</div>';
-    unset($_SESSION['success_message']);
-}
-?>
-
-<script type="text/javascript">
-    // Hide the message after 5 seconds (5000 milliseconds)
-    setTimeout(function() {
-        var messageDiv = document.getElementById('message');
-        if (messageDiv) {
-            messageDiv.style.display = 'none';
-        }
-    }, 5000);
-</script>
-
+               if (isset($_SESSION['error_message'])) {
+                   echo '<div id="message" style="color: red; text-align: center;">'.$_SESSION['error_message'].'</div>';
+                   unset($_SESSION['error_message']);
+                 }
+              if (isset($_SESSION['success_message'])) {
+                   echo '<div id="message" style="color: green; text-align: center;">'.$_SESSION['success_message'].'</div>';
+                   unset($_SESSION['success_message']);
+                 }
+             ?>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <!-- <li class="breadcrumb-item"><a href="#">Mtumiaji</a></li> -->
-            </ol>
-          </div>
-        </div>
-      </div>
-      
-      <!-- /.container-fluid -->
+        <div class="col-sm-6">
+             <ol class="breadcrumb float-sm-right">
+             <!-- <li class="breadcrumb-item"><a href="#">Mtumiaji</a></li> -->
+             </ol>
+         </div>
+       </div>
+     </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+            <div class="card">             
             <div class="card">
-             
-            <div class="card">
-              <!-- /.card-header -->
-             
-              <div class="card-body">
-
-    <div class="card-header">
-                <h3 class="card-title"><div class="row">
-    
-     <a href="create_product.php?invoice_number=<?php echo $_GET['invoice_number']?>" id="popup"><button class="btn btn-success btn-md" name="submit"><span class="icon-plus-sign icon-large"></span> Create new product</button></a>
-    
-<!-- Add the import button -->
-<!-- <button class="btn btn-primary" id="importButton">Import Products from Excel</button> -->
-
-<!-- Add a hidden file input for selecting the Excel file -->
-<input type="file" id="excelFileInput" style="display: none;">
-</div>
+              <!-- /.card-header -->             
+            <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title"><div class="row">    
+                    <a href="create_product.php?invoice_number=<?php echo $_GET['invoice_number']?>" id="popup"><button class="btn btn-success btn-md" name="submit"><span class="icon-plus-sign icon-large"></span> Create new product</button></a>    
+                    <!-- Add the import button -->
+                    <!-- <button class="btn btn-primary" id="importButton">Import Products from Excel</button> -->
+                    <!-- Add a hidden file input for selecting the Excel file -->
+                    <input type="file" id="excelFileInput" style="display: none;">
+                </div>
               </div>
     <section class="content">
       <div class="container-fluid">

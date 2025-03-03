@@ -1,13 +1,8 @@
-
-<?php
- 
+<?php 
     session_start();
-
     if(!isset($_SESSION['user_session'])){
-
         header("location:../index.php");
-    }
-    
+    }    
 //  a session variable named 'username' that stores the username of the logged-in user
 $mtumiaji = $_SESSION['user_session'];
 ?>
@@ -20,8 +15,8 @@ $mtumiaji = $_SESSION['user_session'];
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- THE BELOW LINKS FOR MODAL TO FUNCTION -->
   <link rel="stylesheet" type="text/css" href="src/facebox.css">
-       <!-- THE LINK BELOW FOR UPDATE QUANTITY CYSING -->
-       <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <!-- THE LINK BELOW FOR UPDATE QUANTITY CYSING -->
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -43,14 +38,14 @@ $mtumiaji = $_SESSION['user_session'];
   <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../src/facebox.js"></script>
 
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/jquery_ui.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="src/facebox.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
        jQuery(document).ready(function($) {//*****POP_UP FORMS*********
@@ -62,7 +57,26 @@ $mtumiaji = $_SESSION['user_session'];
 
     </script>
      
+<style>
+  /* Custom Modal Styling for Small Screens */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 10px; /* Reduce margin on small screens */
+  }
 
+  .modal-content {
+    margin: 0 auto;
+  }
+
+  .modal-body {
+    padding: 15px; /* Reduce padding on small screens */
+  }
+
+  .form-group {
+    margin-bottom: 10px; /* Reduce spacing between form fields */
+  }
+}
+</style>
 
 
 
@@ -119,28 +133,6 @@ $mtumiaji = $_SESSION['user_session'];
     <!-- /.sidebar -->
   </aside>
 
-
-  <!-- Edit Product Modal -->
-<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Form for editing product will be loaded here -->
-        <div id="editProductFormContainer"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <section class="content-header">
@@ -159,6 +151,7 @@ if (isset($_SESSION['success_message'])) {
     unset($_SESSION['success_message']);
 }
 ?>
+
 <script type="text/javascript">
     // Hide the message after 5 seconds (5000 milliseconds)
     setTimeout(function() {
@@ -168,6 +161,7 @@ if (isset($_SESSION['success_message'])) {
         }
     }, 5000);
 </script>
+
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -175,20 +169,26 @@ if (isset($_SESSION['success_message'])) {
             </ol>
           </div>
         </div>
-      </div>      
+      </div>
+      
       <!-- /.container-fluid -->
     </section>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">             
             <div class="card">
-              <!-- /.card-header -->             
+             
+            <div class="card">
+              <!-- /.card-header -->
+             
               <div class="card-body">
+
     <div class="card-header">
-                <h3 class="card-title"><div class="row">    
+                <h3 class="card-title"><div class="row">
+    
      <a href="create_product.php?invoice_number=<?php echo $_GET['invoice_number']?>" id="popup"><button class="btn btn-success btn-md" name="submit"><span class="icon-plus-sign icon-large"></span> Create new product</button></a>
     
 <!-- Add the import button -->
@@ -206,7 +206,9 @@ if (isset($_SESSION['success_message'])) {
               <div class="card-header">
 
      <div class="container"><!---****SEARCHES_CONTENT*****--->
-      <div class="row">  
+
+      <div class="row">
+    
             
             <input type="text" size="20" id="med_quantity" onkeyup="quanti()" placeholder="By product name" title="andika jina la Dawa"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="text" size="20" id="med_status" onkeyup="stat_search()" placeholder="By profit" title="Andika kiasi cha faida">
@@ -300,7 +302,34 @@ while ($row = mysqli_fetch_array($result)) :
 $serialNumber++;
 endwhile;
 ?>
-
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="editProductModalLabel">Edit Product</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="overflow-y: auto; max-height: 70vh;">
+        <!-- Form for editing product will be loaded here -->
+        <div id="editProductFormContainer" class="container-fluid">
+          <!-- Loading spinner while the form is being loaded -->
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </tbody>
 
            </table>  
@@ -310,14 +339,7 @@ endwhile;
     </div>
     </div>
     <script>
-<script>
 $(document).ready(function() {
-    // Handle modal close event
-    $('#editProductModal').on('hidden.bs.modal', function () {
-        // Remove the modal backdrop
-        $('.modal-backdrop').remove();
-    });
-
     // Handle click event of the edit button
     $('.edit-product').on('click', function() {
         var productId = $(this).data('id');
@@ -335,7 +357,6 @@ $(document).ready(function() {
         $('#editProductFormContainer form').submit();
     });
 });
-</script>
 </script>
 <script type="text/javascript">
 function med_name1() {//***Search For Medicine *****
@@ -461,6 +482,31 @@ $(".delete").click(function(){//***Showing Alert When Deleting*****
 
 <!-- THE SCRIPT BELOW MAKES Sidebar MENU TO BE NAVIGETABLE -->
 <script src="./dist/js/adminlte.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Handle click event of the edit button
+    $('.edit-product').on('click', function() {
+        var productId = $(this).data('id');
+        var invoiceNumber = "<?php echo $_GET['invoice_number']; ?>";
+
+        // Load the edit form into the modal
+        $('#editProductFormContainer').load('credit_purchases_view.php?id=' + productId + '&invoice_number=' + invoiceNumber, function() {
+            // Optionally, you can add additional initialization code here
+        });
+    });
+
+    // Save changes button click event
+    $('#saveChanges').on('click', function() {
+        // Submit the form inside the modal
+        $('#editProductFormContainer form').submit();
+    });
+
+    // Ensure the modal backdrop is removed when the modal is closed
+    $('#editProductModal').on('hidden.bs.modal', function () {
+        $('.modal-backdrop').remove(); // Remove the backdrop
+    });
+});
+</script>
 <script>
     // Handle click event of the import button
     $('#importButton').click(function() {
