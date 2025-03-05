@@ -25,13 +25,11 @@ while ($row = mysqli_fetch_array($select_query)):
             <tr id="row">
                 <td>Jina la Dawa:</td>
                 <td><input type="text" name="med_name" id="med_name" size="10" value="<?php echo $row['medicine_name'] ?>" required></td>
-            </tr>
+            
 
-            <tr>
                 <td>Aina ya Dawa:</td>
                 <td><input type="text" name="category" id="category" size="10" value="<?php echo $row['category'] ?>" required></td>
-            </tr>
-            <tr>
+            
                 <td>Idadi:</td>
                 <td>
                     <input type="number" style="width: 95px;" name="quantity" value="<?php echo $row['quantity'] ?>">
@@ -49,36 +47,29 @@ while ($row = mysqli_fetch_array($select_query)):
             <tr>
                 <td>Idadi Iliyouzwa:</td>
                 <td><input type="number" name="used_quantity" readonly id="used_quantity" value="<?php echo $row['used_quantity'] ?>"></td>
-            </tr>
-            <tr>
+            
                 <td>Idadi iliyobaki:</td>
                 <td><input type="number" name="act_remain_quantity" id="act_remain_quantity" value="<?php echo $row['act_remain_quantity'] ?>"></td>
-            </tr>
-            <tr>
+           
                 <td>Tarehe ya kuingiza Dawa:</td>
                 <td><input type="date" name="reg_date" id="reg_date" size="5" value="<?php echo $row['register_date'] ?>" required></td>
             </tr>
-            <tr>
                 <td>Tarehe ya ku expire:</td>
                 <td><input type="date" name="exp_date" id="exp_date" size="5" value="<?php echo $row['expire_date'] ?>" required></td>
-            </tr>
-            <tr>
+            
                 <td>Msambazaji:</td>
                 <td><input type="text" name="company" id="company" size="10" value="<?php echo $row['company'] ?>"></td>
-            </tr>
-            <tr>
+            
                 <td>Bei halisi:</td>
                 <td><input type="number" name="actual_price" id="actual_price" value="<?php echo $row['actual_price'] ?>"></td>
             </tr>
             <tr>
                 <td>Bai ya kuuzia:</td>
                 <td><input type="number" name="selling_price" id="selling_price" value="<?php echo $row['selling_price'] ?>"></td>
-            </tr>
-            <tr>
+           
                 <td>Faida yake</td>
                 <td><input type="text" name="profit_price" id="profit_price" value="<?php echo $row['profit_price'] ?>" readonly></td>
-            </tr>
-            <tr>
+           
                 <td>Hali:</td>
                 <td>
                     <select style="width: 230px; height: 35px; border-color: #000080" name="status">
@@ -87,6 +78,10 @@ while ($row = mysqli_fetch_array($select_query)):
                         <option value="Not Available">Not Available</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
+                <td>Reason for editing:   </td>
+                <td><input type="text" name="edit_reason" id="edit_reason" required></td>
             </tr>
         <?php endwhile; ?>
             <tr>

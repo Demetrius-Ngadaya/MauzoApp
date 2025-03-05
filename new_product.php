@@ -40,7 +40,7 @@ $result = mysqli_query($con, $sql);
 <!DOCTYPE html>  
 <html>
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <title>MauzApp</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,29 +58,27 @@ $result = mysqli_query($con, $sql);
   <!-- Theme style -->
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">  
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../src/facebox.js"></script>
-  <script src="js/jquery-1.7.2.min.js"></script>
-  <script src="js/jquery_ui.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="text/javascript" src="src/facebox.js"></script>
-  <script type="text/javascript">
-       jQuery(document).ready(function($) {
-        //*****POP_UP FORMS*********
+    <script type="text/javascript" src="../src/facebox.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery_ui.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="src/facebox.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+       jQuery(document).ready(function($) {//*****POP_UP FORMS*********
     $("a[id*=popup").facebox({
       loadingImage : './src/loading.gif',
       closeImage   : './src/closelabel.png'
     })
-  })
-  //*****POP_UP FORMS*********
-  </script>
-       
+  })//*****POP_UP FORMS*********
+
+    </script>
+     
 <style>
   /* Custom Modal Styling for Small Screens */
 @media (max-width: 576px) {
@@ -101,7 +99,6 @@ $result = mysqli_query($con, $sql);
   }
 }
 </style>
-
   </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -164,6 +161,15 @@ $result = mysqli_query($con, $sql);
                    unset($_SESSION['success_message']);
                  }
              ?>
+             <script type="text/javascript">
+    // Hide the message after 5 seconds (5000 milliseconds)
+    setTimeout(function() {
+        var messageDiv = document.getElementById('message');
+        if (messageDiv) {
+            messageDiv.style.display = 'none';
+        }
+    }, 5000);
+</script>
           </div>
         <div class="col-sm-6">
              <ol class="breadcrumb float-sm-right">
@@ -280,9 +286,9 @@ while ($row = mysqli_fetch_array($result)) :
             ?>
         </td>
         <td>
-            <a id="popup" href="update_view.php?id=<?php echo $row['id']?>&invoice_number=<?php echo $_GET['invoice_number']?>">
-                <button class="btn btn-info"><span class="icon-edit"></span></button>
-            </a>
+        <button class="btn btn-info edit-product" data-id="<?php echo $row['id']; ?>&invoice_number=<?php echo $_GET['invoice_number']?>" data-toggle="modal" data-target="#editProductModal">
+        <span class="icon-edit"></span>
+    </button>
         </td>
         <td>
             <button class="btn btn-danger delete" id="<?php echo $row['id']?>"><span class="icon-trash"></span></button>
@@ -293,7 +299,34 @@ while ($row = mysqli_fetch_array($result)) :
 $serialNumber++;
 endwhile;
 ?>
-
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="editProductModalLabel">Edit Product</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="overflow-y: auto; max-height: 70vh;">
+        <!-- Form for editing product will be loaded here -->
+        <div id="editProductFormContainer" class="container-fluid">
+          <!-- Loading spinner while the form is being loaded -->
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </tbody>
 
            </table>  
@@ -322,6 +355,26 @@ endwhile;
       </div>
     </div>
     </div>
+    <script>
+$(document).ready(function() {
+    // Handle click event of the edit button
+    $('.edit-product').on('click', function() {
+        var productId = $(this).data('id');
+        var invoiceNumber = "<?php echo $_GET['invoice_number']; ?>";
+
+        // Load the edit form into the modal
+        $('#editProductFormContainer').load('update_view.phpid=' + productId + '&invoice_number=' + invoiceNumber, function() {
+            // Optionally, you can add additional initialization code here
+        });
+    });
+
+    // Save changes button click event
+    $('#saveChanges').on('click', function() {
+        // Submit the form inside the modal
+        $('#editProductFormContainer form').submit();
+    });
+});
+</script>
 <script type="text/javascript">
 function med_name1() {//***Search For Medicine *****
   var input, filter, table, tr, td, i;
@@ -446,6 +499,31 @@ $(".delete").click(function(){//***Showing Alert When Deleting*****
 
 <!-- THE SCRIPT BELOW MAKES Sidebar MENU TO BE NAVIGETABLE -->
 <script src="./dist/js/adminlte.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Handle click event of the edit button
+    $('.edit-product').on('click', function() {
+        var productId = $(this).data('id');
+        var invoiceNumber = "<?php echo $_GET['invoice_number']; ?>";
+
+        // Load the edit form into the modal
+        $('#editProductFormContainer').load('update_view.php?id=' + productId + '&invoice_number=' + invoiceNumber, function() {
+            // Optionally, you can add additional initialization code here
+        });
+    });
+
+    // Save changes button click event
+    $('#saveChanges').on('click', function() {
+        // Submit the form inside the modal
+        $('#editProductFormContainer form').submit();
+    });
+
+    // Ensure the modal backdrop is removed when the modal is closed
+    $('#editProductModal').on('hidden.bs.modal', function () {
+        $('.modal-backdrop').remove(); // Remove the backdrop
+    });
+});
+</script>
 <script>
     // Handle click event of the import button
     $('#importButton').click(function() {

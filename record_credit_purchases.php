@@ -28,25 +28,16 @@ $mtumiaji = $_SESSION['user_session'];
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> 
-
-
-
-  
-
-
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script type="text/javascript" src="../src/facebox.js"></script>
-
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/jquery_ui.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="src/facebox.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script type="text/javascript">
        jQuery(document).ready(function($) {//*****POP_UP FORMS*********
     $("a[id*=popup").facebox({
@@ -77,10 +68,6 @@ $mtumiaji = $_SESSION['user_session'];
   }
 }
 </style>
-
-
-
-
 </head>
 
 <body class="hold-transition sidebar-mini">

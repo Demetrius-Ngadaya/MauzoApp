@@ -39,7 +39,7 @@ $created_by = $_SESSION['user_session'];
 $status = 'Available'; 
 $purchases_status = 'credit'; 
 
-  // HAPA UNAWEZA KUECHO KITU CHOCHOTE KIFUNGUKE MDA WA KU LOAD
+  // HAPA UNAWEZA KUWEKA KITU CHOCHOTE KIFUNGUKE MDA WA KU LOAD
   $sql=" UPDATE stock SET medicine_name='$med_name',category='$category',quantity='$quantity', used_quantity='$used_qty', remain_quantity= '$act_remain_quantity',act_remain_quantity='$act_remain_quantity',expire_date='$new_exp_date',company='$company',sell_type='$sell_type',actual_price='$actual_price',selling_price='$selling_price',profit_price='$profit_price',status='$status' WHERE id = '$id' ";
 
    $result =mysqli_query($con,$sql); 
