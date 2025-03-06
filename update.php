@@ -24,6 +24,8 @@ $reg_date = strtotime($_POST['reg_date']);
 $new_reg_date = date('Y-m-d',$reg_date);
 $exp_date= strtotime($_POST['exp_date']); 
 $new_exp_date = date('Y-m-d',$exp_date);
+$stock_alert =  $_POST['stock_alert']; 
+$old_quantity =  $_POST['old_quantity']; 
 $company =  $_POST['company']; 
 $sell_type = $_POST['sell_type'];
 $actual_price = $_POST['actual_price'];  
@@ -34,41 +36,21 @@ $edited_by =  $_SESSION['user_session'];
 $edit_reason =  $_POST['edit_reason']; 
 $edited_date =  date('y,m,d'); 
 
-  $sql=" UPDATE stock SET medicine_name='$med_name',category='$category',quantity='$quantity', used_quantity='$used_qty', remain_quantity= '$act_remain_quantity',act_remain_quantity='$act_remain_quantity',register_date='$new_reg_date',expire_date='$new_exp_date',company='$company',sell_type='$sell_type',actual_price='$actual_price',selling_price='$selling_price',profit_price='$profit_price',edited_by='$edited_by',edit_reason='$edit_reason',edited_date='$edited_date',status='$status' WHERE id = '$id' ";
 
-   $result =mysqli_query($con,$sql); 
-
-   // HAPA UNAWEZA KUECHO KITU CHOCHOTE KIFUNGUKE MDA WA KU LOAD
-
-   if($result){  
-
-    echo "<script type='text/javascript'>window.top.location='new_product.php?invoice_number=$invoice_number'</script>";
-          
-   }
-}
- 
-
-
-
-
-
-
-
-
-$sql=" UPDATE stock SET medicine_name='$med_name',category='$category',quantity='$quantity', used_quantity='$used_qty',old_quantity='$old_quantity',act_remain_quantity='$act_remain_quantity',register_date='$new_reg_date',expire_date='$new_exp_date',company='$company',sell_type='$sell_type',actual_price='$actual_price',selling_price='$selling_price',profit_price='$profit_price',edited_by='$edited_by',edit_reason='$edit_reason',edited_date='$edited_date',status='$status' WHERE id = '$id' ";
+$sql=" UPDATE stock SET medicine_name='$med_name',category='$category',quantity='$quantity', used_quantity='$used_qty',act_remain_quantity='$act_remain_quantity',register_date='$new_reg_date',expire_date='$new_exp_date',stock_alert='$stock_alert',company='$company',sell_type='$sell_type',actual_price='$actual_price',selling_price='$selling_price',profit_price='$profit_price',edited_by='$edited_by',edited_date='$edited_date',status='$status' WHERE id = '$id' ";
 
 
 $result =mysqli_query($con,$sql); 
 
-$sql="INSERT INTO edited_products(medicine_name, category, quantity,used_quantity,old_quantity,act_remain_quantity,register_date,expire_date, company, sell_type, actual_price, selling_price, profit_price,edited_by,edit_reason,edited_date, status) 
-VALUES ('$med_name', '$category', '$quantity','$used_qty','$old_quantity','$act_remain_quantity','$exp_date', '$company', '$sell_type', '$actual_price', '$selling_price', '$profit_price','$credit_amount', '$created_by', '$purchases_status')";
+$sql="INSERT INTO edited_products(medicine_name, category, quantity,used_quantity,old_quantity,act_remain_quantity,register_date,expire_date,stock_alert,company, sell_type, actual_price, selling_price, profit_price,edited_by,edit_reason,edited_date, status) 
+VALUES ('$med_name', '$category', '$quantity','$used_qty','$old_quantity','$act_remain_quantity','$new_reg_date','$new_exp_date','$stock_alert','$company', '$sell_type', '$actual_price', '$selling_price', '$profit_price','$edited_by','$edit_reason','$edited_date','$status')";
 
   $result =mysqli_query($con,$sql);
   if ($result) {
-   $_SESSION['success_message'] = "New purchases details recorded successfuly!";
-   header("Location: record_credit_purchases.php?invoice_number=$invoice_number");
+   $_SESSION['success_message'] = "Product details updated successfuly!";
+   header("Location: new_product.php?invoice_number=$invoice_number");
 } else {
-   echo "<div style='color: red; text-align: center;'>Failed to record product purchase record!</div>";
+   echo "<div style='color: red; text-align: center;'>Failed to update product details!</div>";
 }
 
 }

@@ -248,7 +248,19 @@
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-file-alt"></i>
                   &nbsp;&nbsp;<p>Credit purchases report</p>
                 </a>
-              </li>              
+              </li>  
+              <li class="nav-item">
+              <a href="edited_products_report.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-file-alt"></i>
+                  &nbsp;&nbsp;<p>Edited products report</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+              <a href="deleted_products_report.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-file-alt"></i>
+                  &nbsp;&nbsp;<p>deleted_products report</p>
+                </a>
+              </li>             
               <li class="nav-item">
                 <a href="total_sales_graph.php?invoice_number=<?php echo $_GET['invoice_number']?>" class="nav-link">
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-chart-line"></i>

@@ -3,8 +3,9 @@ include "dbcon.php";
 require "fpdf.php";
 session_start();
 
-if(!isset($_SESSION['user_session'])){
-    header("location:index.php");
+if (!isset($_SESSION['user_session'])) {
+    echo json_encode(["status" => "error", "message" => "Unauthorized access"]);
+    exit();
 }
 
 function generate_unique_invoice_number($con) {
@@ -44,8 +45,7 @@ function generate_random_number() {
     return $pass;
 }
 
-class myPDF extends FPDF{
-
+class myPDF extends FPDF {
     function header() {
         $invoice_number = $_POST['invoice_number'];
         $date = $_POST['date'];
@@ -62,7 +62,6 @@ class myPDF extends FPDF{
         $this->Ln();
         $this->Cell(50,-10,$date,0,0,'C');
         $this->Ln(10);
-        
     }
 
     function footer() {
@@ -87,10 +86,10 @@ class myPDF extends FPDF{
         $paid_amount = $_POST['paid_amount'];
         $invoice_number = $_POST['invoice_number'];
 
-        $select_sql = "SELECT * FROM on_hold where invoice_number = '$invoice_number'";
-        $select_query = mysqli_query($con,$select_sql);
+        $select_sql = "SELECT * FROM on_hold WHERE invoice_number = '$invoice_number'";
+        $select_query = mysqli_query($con, $select_sql);
 
-        while($row = mysqli_fetch_array($select_query)) {
+        while ($row = mysqli_fetch_array($select_query)) {
             $this->SetFont('Times','',12);
             $this->Cell(40,10,$row['medicine_name'],1,0,'C');
             $this->Cell(40,10,$row['category'],1,0,'C');
@@ -101,10 +100,10 @@ class myPDF extends FPDF{
             $this->Ln();
         }
 
-        $select_sql = "SELECT sum(amount) from on_hold where invoice_number = '$invoice_number'";
-        $select_sql = mysqli_query($con,$select_sql); 
+        $select_sql = "SELECT sum(amount) FROM on_hold WHERE invoice_number = '$invoice_number'";
+        $select_sql = mysqli_query($con, $select_sql); 
 
-        while($row = mysqli_fetch_array($select_sql)) {
+        while ($row = mysqli_fetch_array($select_sql)) {
             $amount =  $row['sum(amount)'];
 
             $this->Cell(170,10,'Jumla',1,0,'C');
@@ -121,35 +120,15 @@ class myPDF extends FPDF{
     }
 }
 
-$date1 = date("YMd");
-
-if (!file_exists("C:/invoices")) {
-    mkdir("C:/invoices");
-}
-if (!file_exists("C:/invoices/$date1")) {
-    mkdir("C:/invoices/$date1");
-}
-if (!file_exists("C:/invoices/all_invoices")) {
-    mkdir("C:/invoices/all_invoices");
-}
-if (isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $invoice_number = $_POST['invoice_number'];
     $date = $_POST['date'];
     $created_by = $_POST['created_by'];
-
+    $paid_amount = $_POST['paid_amount'];
     $medicine_names = isset($_POST['medicine_name']) ? (array)$_POST['medicine_name'] : array();
     $quantities = isset($_POST['qty']) ? (array)$_POST['qty'] : array();
-    $paid_amount = isset($_POST['paid_amount']) ? mysqli_real_escape_string($con, $_POST['paid_amount']) : '';
 
-    $pdf = new myPDF();
-    $pdf->AddPage('L', 'A4', 0);
-    $pdf->headerTable();
-    $pdf->viewTable();
-    
-    $filename = "i-" . $invoice_number . ".pdf";
-    $pdf->Output('C:/invoices/' . $date1 . '/' . $filename, 'F');
-    $pdf->Output('C:/invoices/all_invoices/' . $filename, 'F');
-
+    // Save sales data to the `sales` table
     foreach ($medicine_names as $index => $medicine_name) {
         $quantity = $quantities[$index];
         
@@ -175,8 +154,8 @@ if (isset($_POST['submit'])) {
         $remain_quantity = $stock_row['act_remain_quantity'];
 
         // Insert sales record into `sales` table
-        $insert_sql = "INSERT INTO sales (medicine_id, invoice_number, medicines, category, quantity, total_amount, total_profit, payment_method,phone_number,date_to_pay, customer_name, created_by, date,hali_ya_malipo) 
-                       VALUES('$medicine_id', '$invoice_number', '$medicine_name', '$category', '$quantity', '$amount', '$profit_amount', '$payment_method','$phone_number','$date_to_pay','$paid_amount', '$created_by', '$date', '$status')";
+        $insert_sql = "INSERT INTO sales (medicine_id, invoice_number, medicines, category, quantity, total_amount, total_profit, payment_method, phone_number, date_to_pay, customer_name, created_by, date, hali_ya_malipo) 
+                       VALUES('$medicine_id', '$invoice_number', '$medicine_name', '$category', '$quantity', '$amount', '$profit_amount', '$payment_method', '$phone_number', '$date_to_pay', '$paid_amount', '$created_by', '$date', '$status')";
         $insert_query = mysqli_query($con, $insert_sql);
 
         if ($insert_query) {
@@ -186,22 +165,30 @@ if (isset($_POST['submit'])) {
             $update_stock_query = mysqli_query($con, $update_stock);
 
             if (!$update_stock_query) {
-                $_SESSION['message'] = "Failed to update stock for medicine: $medicine_name.";
-                $_SESSION['message_type'] = "error";
-                break;
+                echo json_encode(["status" => "error", "message" => "Failed to update stock for medicine: $medicine_name."]);
+                exit();
             }
         } else {
-            $_SESSION['message'] = "Failed to insert sales data for medicine: $medicine_name.";
-            $_SESSION['message_type'] = "error";
-            break;
+            echo json_encode(["status" => "error", "message" => "Failed to insert sales data for medicine: $medicine_name."]);
+            exit();
         }
     }
 
-    if (!isset($_SESSION['message_type']) || $_SESSION['message_type'] == "success") {
-        $_SESSION['message'] = "Sales transaction completed successfully.";
-        $_SESSION['message_type'] = "success";
-    }
+    // Generate PDF receipt
+    $pdf = new myPDF();
+    $pdf->AddPage('L', 'A4', 0);
+    $pdf->headerTable();
+    $pdf->viewTable();
+    
+    $filename = "i-" . $invoice_number . ".pdf";
+    $pdf->Output('C:/invoices/' . date("YMd") . '/' . $filename, 'F');
+    $pdf->Output('C:/invoices/all_invoices/' . $filename, 'F');
 
-    $new_invoice_number = generate_unique_invoice_number($con);
-    header("location:home.php?invoice_number=$new_invoice_number");
+    // Return success response
+    echo json_encode(["status" => "success", "message" => "Sales transaction completed successfully.", "invoice_number" => $invoice_number]);
+    exit();
+} else {
+    echo json_encode(["status" => "error", "message" => "Invalid request method"]);
+    exit();
 }
+?>

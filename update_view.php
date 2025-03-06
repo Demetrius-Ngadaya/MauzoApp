@@ -16,24 +16,91 @@ $select_query = mysqli_query($con, $select_sql);
 
 while ($row = mysqli_fetch_array($select_query)):
     $sell_type = $row['sell_type'];
+    $old_quantity = $row['act_remain_quantity'];
 ?>
-<body>  
-    <form method="POST" action="update.php?invoice_number=<?php echo $invoice_number ?>">
-        <table id="table" style="width: 400px; margin: auto;">
-            <td><input type="hidden" name="id" value="<?php echo $row['id'] ?>"></td>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Stock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            max-width: 1200px; /* Increased width to accommodate three columns */
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three columns */
+            gap: 15px; /* Space between columns */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+            grid-column: span 3; /* Make the submit button span all three columns */
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form method="POST" action="update.php?invoice_number=<?php echo $invoice_number ?>">
+            <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+            <input type="hidden" name="old_quantity" value="<?php echo $old_quantity; ?>">
 
-            <tr id="row">
-                <td>Jina la Dawa:</td>
-                <td><input type="text" name="med_name" id="med_name" size="10" value="<?php echo $row['medicine_name'] ?>" required></td>
-            
+            <div class="form-grid">
+                <!-- Column 1 -->
+                <div class="form-group">
+                    <label for="med_name">Jina la Dawa:</label>
+                    <input type="text" name="med_name" id="med_name" value="<?php echo $row['medicine_name'] ?>" required>
+                </div>
 
-                <td>Aina ya Dawa:</td>
-                <td><input type="text" name="category" id="category" size="10" value="<?php echo $row['category'] ?>" required></td>
-            
-                <td>Idadi:</td>
-                <td>
-                    <input type="number" style="width: 95px;" name="quantity" value="<?php echo $row['quantity'] ?>">
-                    <select style="width: 95px; height: 28px; border-color: #000080" name="sell_type">
+                <div class="form-group">
+                    <label for="category">Aina ya Dawa:</label>
+                    <input type="text" name="category" id="category" value="<?php echo $row['category'] ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Idadi:</label>
+                    <input type="number" name="quantity" id="quantity" value="<?php echo $row['quantity'] ?>">
+                </div>
+
+                <!-- Column 2 -->
+                <div class="form-group">
+                    <label for="sell_type">Aina ya Kuuza:</label>
+                    <select name="sell_type" id="sell_type">
                         <?php
                         $options = ["pc", "roll", "box", "kg", "bags", "mm", "Kopo","tabs", "Lita", "Sewa", "pkt", "trip", "1/4kg", "ndoo", "m", "nr", "kopo", "gln", "m3", "nr"];
                         foreach ($options as $option) {
@@ -42,87 +109,76 @@ while ($row = mysqli_fetch_array($select_query)):
                         }
                         ?>
                     </select>
-                </td>
-            </tr> 
-            <tr>
-                <td>Idadi Iliyouzwa:</td>
-                <td><input type="number" name="used_quantity" readonly id="used_quantity" value="<?php echo $row['used_quantity'] ?>"></td>
-            
-                <td>Idadi iliyobaki:</td>
-                <td><input type="number" name="act_remain_quantity" id="act_remain_quantity" value="<?php echo $row['act_remain_quantity'] ?>"></td>
-           
-                <td>Tarehe ya kuingiza Dawa:</td>
-                <td><input type="date" name="reg_date" id="reg_date" size="5" value="<?php echo $row['register_date'] ?>" required></td>
-            </tr>
-                <td>Tarehe ya ku expire:</td>
-                <td><input type="date" name="exp_date" id="exp_date" size="5" value="<?php echo $row['expire_date'] ?>" required></td>
-            
-                <td>Msambazaji:</td>
-                <td><input type="text" name="company" id="company" size="10" value="<?php echo $row['company'] ?>"></td>
-            
-                <td>Bei halisi:</td>
-                <td><input type="number" name="actual_price" id="actual_price" value="<?php echo $row['actual_price'] ?>"></td>
-            </tr>
-            <tr>
-                <td>Bai ya kuuzia:</td>
-                <td><input type="number" name="selling_price" id="selling_price" value="<?php echo $row['selling_price'] ?>"></td>
-           
-                <td>Faida yake</td>
-                <td><input type="text" name="profit_price" id="profit_price" value="<?php echo $row['profit_price'] ?>" readonly></td>
-           
-                <td>Hali:</td>
-                <td>
-                    <select style="width: 230px; height: 35px; border-color: #000080" name="status">
+                </div>
+
+                <div class="form-group">
+                    <label for="used_quantity">Idadi Iliyouzwa:</label>
+                    <input type="number" name="used_quantity" id="used_quantity" value="<?php echo $row['used_quantity'] ?>" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="act_remain_quantity">Idadi Iliyobaki:</label>
+                    <input type="number" name="act_remain_quantity" id="act_remain_quantity" value="<?php echo $row['act_remain_quantity'] ?>">
+                </div>
+
+                <!-- Column 3 -->
+                <div class="form-group">
+                    <label for="reg_date">Tarehe ya Kuingiza Dawa:</label>
+                    <input type="date" name="reg_date" id="reg_date" value="<?php echo $row['register_date'] ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exp_date">Tarehe ya Ku Expire:</label>
+                    <input type="date" name="exp_date" id="exp_date" value="<?php echo $row['expire_date'] ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Msambazaji:</label>
+                    <input type="text" name="company" id="company" value="<?php echo $row['company'] ?>">
+                </div>
+
+                <!-- Additional Fields -->
+                <div class="form-group">
+                    <label for="actual_price">Bei Halisi:</label>
+                    <input type="number" name="actual_price" id="actual_price" value="<?php echo $row['actual_price'] ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="selling_price">Bei ya Kuuzia:</label>
+                    <input type="number" name="selling_price" id="selling_price" value="<?php echo $row['selling_price'] ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="profit_price">Faida Yake:</label>
+                    <input type="text" name="profit_price" id="profit_price" value="<?php echo $row['profit_price'] ?>" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Hali:</label>
+                    <select name="status" id="status">
                         <option disabled><?php echo $row['status'] ?></option>
                         <option value="Available">Available</option>
                         <option value="Not Available">Not Available</option>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Reason for editing:   </td>
-                <td><input type="text" name="edit_reason" id="edit_reason" required></td>
-            </tr>
-        <?php endwhile; ?>
-            <tr>
-                <td></td>
-                <td><input type="submit" name="update" class="btn btn-success btn-md" style="width: 225px" value="Hifadhi Mabadiliko"></td>
-            </tr>
-        </table>
-        <br>
-    </form><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock_alert">Stock Alert:</label>
+                    <input type="number" name="stock_alert" id="stock_alert" value="<?php echo $row['stock_alert'] ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_reason">Sababu ya Kuhariri:</label>
+                    <input type="text" name="edit_reason" id="edit_reason" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" name="update" class="btn btn-success btn-md" value="Hifadhi Mabadiliko">
+            </div>
+        </form>
+    </div>
 </body>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        //***AUTO CALCULATION****
-        $(document).on('keyup', '#med_name', function () {
-            var med_name_cap = $("#med_name").val();
-            $("#med_name").val(med_name_cap.charAt(0).toUpperCase() + med_name_cap.slice(1));
-        });
-
-        $(document).on('keyup', '#category', function () {
-            var category_cap = $("#category").val();
-            $("#category").val(category_cap.charAt(0).toUpperCase() + category_cap.slice(1));
-        });
-
-        $(document).on('keyup', '#actual_price', function () {
-            var act_price = $("#actual_price").val();
-            var sell_price = $("#selling_price").val();
-            var pro_price = parseInt(sell_price) - parseInt(act_price);
-            var percentage = Math.round((parseInt(pro_price) / parseInt(act_price) * 100);
-            var output = pro_price.toString().concat("(") + percentage.toString().concat("%)");
-            $("#profit_price").val(output);
-        });
-
-        $(document).on('keyup', '#selling_price', function () {
-            var act_price = $("#actual_price").val();
-            var sell_price = $("#selling_price").val();
-            var pro_price = parseInt(sell_price) - parseInt(act_price);
-            var percentage = Math.round((parseInt(pro_price) / parseInt(act_price) * 100);
-            var output = pro_price.toString().concat("(") + percentage.toString().concat("%)");
-            $("#profit_price").val(output);
-        });
-    });
-</script>
 </html>
+<?php endwhile; ?>

@@ -30,7 +30,13 @@ $mtumiaji = $_SESSION['user_session'];
     <!-- <script src="./plugins/sweetalert2/sweetalert2.all.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    <style>
+    .past-due {
+        background-color: red; /* Light red background for past due dates */
+        color: #000; /* Optional: Set text color to black for better readability */
+        font-weight: bold; /* Optional: Make the text bold */
+    }
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -127,62 +133,67 @@ $mtumiaji = $_SESSION['user_session'];
                                                 </tr>
                                             </thead>
                                             <tbody>
-    <?php
-    // Include database connection
-    include("dbcon.php");
+<?php
+// Include database connection
+include("dbcon.php");
 
-    // Get the current year
-    $currentYear = date("Y");
+// Get the current date
+$currentDate = date("Y-m-d");
 
-    // Construct the SQL query to retrieve all sales with credit status
-    $select_sql = "SELECT * FROM sales WHERE hali_ya_malipo='not paid'";
+// Construct the SQL query to retrieve all sales with credit status
+$select_sql = "SELECT * FROM sales WHERE hali_ya_malipo='not paid'";
 
-    // Execute the SQL query
-    $select_query = mysqli_query($con, $select_sql);
+// Execute the SQL query
+$select_query = mysqli_query($con, $select_sql);
 
-    // Initialize variables for total amount and profit
-    $total_amount = 0;
-    $total_profit = 0;
-    $serialNumber = 1; // Initialize serial number counter
+// Initialize variables for total amount and profit
+$total_amount = 0;
+$total_profit = 0;
+$serialNumber = 1; // Initialize serial number counter
 
-    // Check if there are results
-    if (mysqli_num_rows($select_query) > 0) {
-        // Output the sales data
-        while ($row = mysqli_fetch_assoc($select_query)) {
-            // Calculate total amount
-            $total_amount += $row['total_amount'];
-            // Calculate total profit
-            $total_profit += $row['total_profit'];
+// Check if there are results
+if (mysqli_num_rows($select_query) > 0) {
+    // Output the sales data
+    while ($row = mysqli_fetch_assoc($select_query)) {
+        // Calculate total amount
+        $total_amount += $row['total_amount'];
+        // Calculate total profit
+        $total_profit += $row['total_profit'];
 
-            // Output each row of sales data
-            echo "<tr>";
-            echo "<td>" . $serialNumber++ . "</td>"; // Serial number column
-            echo "<td>" . $row['Date'] . "</td>";
-            echo "<td>" . $row['medicines'] . "</td>";
-            echo "<td>" . $row['quantity'] . "</td>";
-            echo "<td>" . $row['total_amount'] . "</td>";
-            echo "<td>" . $row['total_profit'] . "</td>";
-            echo "<td>" . $row['customer_name'] . "</td>";
-            echo "<td>" . $row['phone_number'] . "</td>";
-            echo "<td>" . $row['date_to_pay'] . "</td>";
-            echo "<td>" . $row['created_by'] . "</td>";
+        // Check if the date_to_pay has passed
+        $dateToPay = $row['date_to_pay'];
+        $isPastDue = (strtotime($dateToPay) < strtotime($currentDate));
 
-            // Add a button in the status column with SweetAlert confirmation
-            echo "<td>";
-            if ($row['hali_ya_malipo'] == 'not paid') {
-                echo '<button type="button" class="btn btn-sm btn-success" onclick="confirmMarkAsPaid(' . $row['id'] . ');">Mark as Paid</button>';
-            } else {
-                echo "Paid";
-            }
-            echo "</td>";
+        // Output each row of sales data
+        echo "<tr>";
+        // Apply the .past-due class to the serial number cell if the date_to_pay has passed
+        echo "<td" . ($isPastDue ? ' class="past-due"' : '') . ">" . $serialNumber++ . "</td>"; // Serial number column
+        echo "<td>" . $row['Date'] . "</td>";
+        echo "<td>" . $row['medicines'] . "</td>";
+        echo "<td>" . $row['quantity'] . "</td>";
+        echo "<td>" . $row['total_amount'] . "</td>";
+        echo "<td>" . $row['total_profit'] . "</td>";
+        echo "<td>" . $row['customer_name'] . "</td>";
+        echo "<td>" . $row['phone_number'] . "</td>";
+        echo "<td>" . $row['date_to_pay'] . "</td>";
+        echo "<td>" . $row['created_by'] . "</td>";
 
-            echo "</tr>";
+        // Add a button in the status column with SweetAlert confirmation
+        echo "<td>";
+        if ($row['hali_ya_malipo'] == 'not paid') {
+            echo '<button type="button" class="btn btn-sm btn-success" onclick="confirmMarkAsPaid(' . $row['id'] . ');">Mark as Paid</button>';
+        } else {
+            echo "Paid";
         }
-    } else {
-        // If there are no sales recorded for the specified period, display a message
-        echo '<tr><td colspan="11">In your sales you dont have any credit sales </td></tr>';
+        echo "</td>";
+
+        echo "</tr>";
     }
-    ?>
+} else {
+    // If there are no sales recorded for the specified period, display a message
+    echo '<tr><td colspan="11">In your sales you dont have any credit sales </td></tr>';
+}
+?>
 <script>
     // Function to confirm marking as paid
     function confirmMarkAsPaid(saleId) {

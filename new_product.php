@@ -322,7 +322,7 @@ endwhile;
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+        <!-- <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button> -->
       </div>
     </div>
   </div>
@@ -450,33 +450,30 @@ function stat_search() {//***Search For Status*****
   }
 }
 
-$(".delete").click(function(){//***Showing Alert When Deleting*****
+$(".delete").click(function() {
+    var element = $(this);
+    var del_id = element.attr("id");
 
-  var element = $(this);
-
-  var del_id = element.attr("id");
-
-  var info = 'id='+del_id;
-
-  if(confirm("Je una uhakika unataka kuifuta Dawa hii?? Haitoweza kurudi tena")){
-
-    $.ajax({
-
-      type :"GET",
-      url  :'delete.php',
-      data :info,
-      success:function(){
-        location.reload(true);
-      },
-      error:function(){
-        alert("error");
-      }
-
-    });
-    
-  }
-  return false;
-
+    if (confirm("Je una uhakika unataka kuifuta Dawa hii?? Haitoweza kurudi tena")) {
+        $.ajax({
+            type: "GET",
+            url: "delete.php",
+            data: { id: del_id },
+            dataType: "json", // Expect JSON response
+            success: function(response) {
+                if (response.status === "success") {
+                    alert(response.message); // Show success message
+                    location.reload(true); // Reload the page
+                } else {
+                    alert(response.message); // Show error message
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("AJAX Error: " + error); // Show AJAX error
+            }
+        });
+    }
+    return false;
 });//***Showing Alert When Deleting********
 
 
